@@ -11,16 +11,16 @@ import UIKit
 open class Dropper: UIView {
     open let TableMenu: UITableView = UITableView()
     /**
-    Alignment of the dropdown menu compared to the button
-    
-    - Left: Dropdown is aligned to the left side the corresponding button
-    
-    - Center: Dropdown is aligned to the center of the corresponding button
-    
-    - Right: Dropdown is aligned to the right of the corresponding button
-    */
+     Alignment of the dropdown menu compared to the button
+     
+     - Left: Dropdown is aligned to the left side the corresponding button
+     
+     - Center: Dropdown is aligned to the center of the corresponding button
+     
+     - Right: Dropdown is aligned to the right of the corresponding button
+     */
     public enum Alignment {
-        case left, center, right
+        case left, center, right, rightedge
     }
     
     /**
@@ -34,22 +34,22 @@ open class Dropper: UIView {
     }
     
     /**
-    The current status of the dropdowns state
-    
-    - Displayed: The dropdown is visible on screen
-    - Hidden: The dropdwon is hidden or offscreen.
-    
-    */
+     The current status of the dropdowns state
+     
+     - Displayed: The dropdown is visible on screen
+     - Hidden: The dropdwon is hidden or offscreen.
+     
+     */
     public enum Status {
         case displayed, hidden, shown
     }
     
     /**
-    Default themes for dropdown menu
-    
-    - Black: Black theme for dropdown. Black background, white text
-    - White: White theme for dropdown. White background, black text
-    */
+     Default themes for dropdown menu
+     
+     - Black: Black theme for dropdown. Black background, white text
+     - White: White theme for dropdown. White background, black text
+     */
     public enum Themes {
         case black(UIColor?), white
     }
@@ -63,21 +63,21 @@ open class Dropper: UIView {
     open var maxHeight: CGFloat? /// The maximum possible height of the dropdown
     open var cellBackgroundColor: UIColor? /// Sets the cell background color
     open var cellColor: UIColor? /// Sets the cell tint color and text color
-	open var cellTextSize: CGFloat? {
-		get {
-			return cellTextFont?.pointSize
-		}
-		set {
-			if let newValue = newValue {
-				cellTextFont = UIFont.systemFont(ofSize: newValue)
-			}else{
-				cellTextFont = nil
-			}
-		}
-	}
+    open var cellTextSize: CGFloat? {
+        get {
+            return cellTextFont?.pointSize
+        }
+        set {
+            if let newValue = newValue {
+                cellTextFont = UIFont.systemFont(ofSize: newValue)
+            }else{
+                cellTextFont = nil
+            }
+        }
+    }
     /// Sets the size of the text to provided value
-	open var cellTextFont: UIFont?
-	
+    open var cellTextFont: UIFont?
+    
     // MARK: - Public Computed Properties
     /// The items to be dispalyed in the tableview
     open var items = [String]() {
@@ -125,12 +125,12 @@ open class Dropper: UIView {
     }
     
     /**
-    Dropdown border styling
-    
-    - (width: CGFloat) Border Width
-    - (color: UIColor) Color of Border
-    
-    */
+     Dropdown border styling
+     
+     - (width: CGFloat) Border Width
+     - (color: UIColor) Color of Border
+     
+     */
     open var border: (width: CGFloat, color: UIColor) {
         get { return (TableMenu.layer.borderWidth, UIColor(cgColor: TableMenu.layer.borderColor!)) }
         set {
@@ -147,7 +147,7 @@ open class Dropper: UIView {
             if let height = maxHeight { // Determines if max_height is provided
                 return height
             }
-
+            
             if let containingView = self.superview { // restrict to containing views height
                 return containingView.frame.size.height - self.frame.origin.y
             }
@@ -179,7 +179,7 @@ open class Dropper: UIView {
         TableMenu.delegate = self
         TableMenu.register(DropperCell.self, forCellReuseIdentifier: "cell")
         // Styling
-        TableMenu.backgroundColor = UIColor.lightGray
+        TableMenu.backgroundColor = UIColor.clear //lightGray
         TableMenu.separatorStyle = UITableViewCellSeparatorStyle.none
         TableMenu.bounces = false
         if (trimCorners) {
@@ -214,28 +214,30 @@ open class Dropper: UIView {
     // MARK: - API
     
     /**
-    Displays the dropdown
-    
-    - parameter options: Position of the dropdown corresponding of the button
-    - parameter button: Button to which the dropdown will be aligned to
-    
-    */
+     Displays the dropdown
+     
+     - parameter options: Position of the dropdown corresponding of the button
+     - parameter button: Button to which the dropdown will be aligned to
+     
+     */
     
     /**
-    Displays the dropdown
-    
-    - parameter options:  Vertical alignment of the dropdown corresponding of the button
-    - parameter position: Horizontal alignment of the dropdown. Defaults to bottom.
-    - parameter button:   Button to which the dropdown will be aligned to
-    */
+     Displays the dropdown
+     
+     - parameter options:  Vertical alignment of the dropdown corresponding of the button
+     - parameter position: Horizontal alignment of the dropdown. Defaults to bottom.
+     - parameter button:   Button to which the dropdown will be aligned to
+     */
     open func show(_ options: Alignment, position: Position = .bottom, button: UIButton) {
         refreshHeight()
-    
+        
         switch options { // Aligns the view vertically to the button
         case .left:
             self.frame.origin.x = button.frame.origin.x
         case .right:
             self.frame.origin.x = button.frame.origin.x + button.frame.width
+        case .rightedge:
+            self.frame.origin.x = button.frame.origin.x + button.frame.width - self.frame.width
         case .center:
             self.frame.origin.x = button.frame.origin.x + (button.frame.width - self.frame.width)/2
         }
@@ -246,7 +248,7 @@ open class Dropper: UIView {
         case .bottom:
             self.frame.origin.y = button.frame.origin.y + button.frame.height + spacing
         }
-    
+        
         if (!self.isHidden) {
             self.addSubview(TableMenu)
             if let buttonRoot = findButtonFromSubviews((button.superview?.subviews)!, button: button) {
@@ -264,12 +266,12 @@ open class Dropper: UIView {
     }
     
     /**
-    Displays the dropdown with fade in type of aniamtion
-    
-    - parameter time:    Time taken for the fade animation
-    - parameter options: Position of the dropdown corresponding of the button
-    - parameter button:  Button to which the dropdown will be aligned to
-    */
+     Displays the dropdown with fade in type of aniamtion
+     
+     - parameter time:    Time taken for the fade animation
+     - parameter options: Position of the dropdown corresponding of the button
+     - parameter button:  Button to which the dropdown will be aligned to
+     */
     open func showWithAnimation(_ time: TimeInterval, options: Alignment, position: Position = .bottom, button: UIButton) {
         if (self.isHidden) {
             refresh()
@@ -284,8 +286,8 @@ open class Dropper: UIView {
     }
     
     /**
-    Hides the dropdown from the view
-    */
+     Hides the dropdown from the view
+     */
     open func hide() {
         status = .hidden
         self.isHidden = true
@@ -295,28 +297,28 @@ open class Dropper: UIView {
     }
     
     /**
-    Fades out and hides the dropdown from the view
-    
-    - parameter time: Time taken to fade out the dropdown
-    */
+     Fades out and hides the dropdown from the view
+     
+     - parameter time: Time taken to fade out the dropdown
+     */
     open func hideWithAnimation(_ time: TimeInterval) {
         UIView.animate(withDuration: time, delay: 0.0, options: .curveEaseOut, animations: {
             self.TableMenu.alpha = 0.0
-            }, completion: { finished in
-                self.hide()
+        }, completion: { finished in
+            self.hide()
         })
     }
     
     /**
-    Refresh the Tablemenu. For specifically calling .reloadData() on the TableView
-    */
+     Refresh the Tablemenu. For specifically calling .reloadData() on the TableView
+     */
     open func refresh() {
         TableMenu.reloadData()
     }
     
     /**
-    Refreshes the table view height
-    */
+     Refreshes the table view height
+     */
     fileprivate func refreshHeight() {
         // Updates the height of the view depending on the amount of item
         let tempHeight: CGFloat = CGFloat(items.count) * TableMenu.rowHeight // Height of TableView
@@ -328,13 +330,13 @@ open class Dropper: UIView {
     }
     
     /**
-    Find corresponding button to which the dropdown is aligned too
-    
-    - parameter subviews: All subviews of where the button is.
-    - parameter button: Button to find
-    
-    - returns: Found button or nil
-    */
+     Find corresponding button to which the dropdown is aligned too
+     
+     - parameter subviews: All subviews of where the button is.
+     - parameter button: Button to find
+     
+     - returns: Found button or nil
+     */
     fileprivate func findButtonFromSubviews(_ subviews: [UIView], button: UIButton) -> UIView? {
         for subview in subviews {
             if (subview is UIButton && subview == button) {

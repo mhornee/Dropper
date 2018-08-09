@@ -1,41 +1,41 @@
-# Dropper
-Dropper is a simple Dropdown menu for iOS. Built with customizability in mind and is flexible on how it can be used. Also, it is easy to setup and use in your projects. If you are looking for some complex dropdown menu, this is not for you. This was more built to be used as an accessory to a view. For example being able to change your currency in a shopping cart app. 
+# MHDropper
+MHDropper is a simple Dropdown menu for iOS. Built with customizability in mind and is flexible on how it can be used. Also, it is easy to setup and use in your projects. If you are looking for some complex dropdown menu, this is not for you. This was more built to be used as an accessory to a view. For example being able to change your currency in a shopping cart app.   MHDropper is forked from the original dropper project (https://github.com/kirkbyo/Dropper)
 
-![Basic demo of how Dropper looks](https://raw.githubusercontent.com/kirkbyo/Dropper/master/Pod/Assets/White-DropdownBasic.mov.gif)
-![Outflow Demo for how Dropper is used in the app](https://raw.githubusercontent.com/kirkbyo/Dropper/master/Pod/Assets/DropperOutflowDemo.mov.gif)
+![Basic demo of how MHDropper looks](https://raw.githubusercontent.com/kirkbyo/Dropper/master/Pod/Assets/White-DropdownBasic.mov.gif)
+![Outflow Demo for how MHDropper is used in the app](https://raw.githubusercontent.com/kirkbyo/Dropper/master/Pod/Assets/DropperOutflowDemo.mov.gif)
 
-Left demo of a basic Dropper menu. Right is how Dropper is used in [Outflow](http://outflowapp.com/).
+Left demo of a basic MHDropper menu. Right is how MHDropper is used in [Outflow](http://outflowapp.com/).
 
 ## Installation
 
-Dropper is available through [CocoaPods](http://cocoapods.org). To install
+MHDropper is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "Dropper"
+pod "MHDropper"
 ```
 
 ## Usage
 
-Setting up is easy, after installing the library, initialize a Dropper menu in your view
+Setting up is easy, after installing the library, initialize a MHDropper menu in your view
 ```swift
 let dropper = Dropper(width: 75, height: 200)
 ```
-After your Dropper view is initialized, you gotta specify which items to be displayed inside the Dropper
+After your MHDropper view is initialized, you gotta specify which items to be displayed inside the MHDropper
 ```swift
 dropper.items = ["Item 1", "Item 2", "Item 3", "Item 4"] // Items to be displayed 
-// Dropper also supports images
+// MHDropper also supports images
 dropper.items = ["Item 1", "ImageOne.png", "Item 3", "ImageTwo.png"] // Images can be mixed with text items 
 ```
-When you are ready to show your Dropper menu you have two options for how to display it: `show()` or `showWithAnimation()`.
+When you are ready to show your MHDropper menu you have two options for how to display it: `show()` or `showWithAnimation()`.
 ```Swift
 dropper.show(options: .Alignment.Center, button: UIButton)
 // OR
 dropper.showWithAnimation(0.15, options: .Alignment.Center, button: UIButton)
 ```
-When you are ready to get back what Dropper item was selected, confrom your class to the `DropperDelegate` and implement the `DropperSelectedRow` method, it is also importent that you initialize the `dropper.delegate` property to your class before showing your view.
+When you are ready to get back what MHDropper item was selected, confrom your class to the `DropperDelegate` and implement the `DropperSelectedRow` method, it is also importent that you initialize the `dropper.delegate` property to your class before showing your view.
 ```Swift
-dropper.delegate = self // Insert this before you show your Dropper
+dropper.delegate = self // Insert this before you show your MHDropper
 
 extension ViewController: DropperDelegate {
     func DropperSelectedRow(path: NSIndexPath, contents: String) {
@@ -97,14 +97,14 @@ Hides the Dropdown menu with an fade out animation
 - `trimCorners` *Bool*: Automaticly applies border radius of 10 to Dropdown (Defaults to False)
 - `defaultAnimationTime` *NSTimeInterval*: The default time for animations to take (Defaults to 0.1)
 - `delegate` *DropperDelegate*: Delegate property, must be initialized for the functions to be called
-    - `DropperSelectedRow`: Called everytime a Dropper row is selected
+    - `DropperSelectedRow`: Called everytime a MHDropper row is selected
 - `status` *Status (Enum)*: The current state of the view
-- `spacing` *CGFloat*: The distance from the button to the Dropper
-- `maxHeight` *CGFloat*: The maximum possible height of the Dropper
+- `spacing` *CGFloat*: The distance from the button to the MHDropper
+- `maxHeight` *CGFloat*: The maximum possible height of the MHDropper
 - `cellBackgroundColor` *UIColor*: Sets the cell background color (Defaults to theme color if not set)
 - `cellColor` *UIColor*: Sets the cell tint color and text color (Defaults to theme color if not set)
 - `cellTextSize` *CGFloat*: Sets the size of the text to provided value (Defaults to UILabel Font Size)
-- `TableMenu` *UITableView*: Table View that the Dropper is built on
+- `TableMenu` *UITableView*: Table View that the MHDropper is built on
 - `items` *[String]*: The items to be dispalyed in the tableview
 - `height` *CGFloat*: Height of the Dropdown
 - `width` *CGFloat*: Width of the Dropdown
@@ -117,15 +117,15 @@ dropper.theme = Dropper.Themes.Black(nil) // Uses default dark color
 // OR
 dropper.theme = Dropper.Themes.Black(UIColor.blackColor()) // Uses Black UIColor
 ```
-- `border` *(width: CGFloat, color: UIColor)*: Specify the border width and the color of the Dropper
+- `border` *(width: CGFloat, color: UIColor)*: Specify the border width and the color of the MHDropper
 ```Swift
 dropper.border = (width: 2, color: UIColor.blueColor())
 ```
 
-- `refresh()`: Refresh the Dropper. For specifically calling .reloadData() on the Table View
+- `refresh()`: Refresh the MHDropper. For specifically calling .reloadData() on the Table View
 
 ## License
 
-Dropper is available under the MIT license. See the LICENSE file for more info.
+MHDropper is available under the MIT license. See the LICENSE file for more info.
 
-Built by [Ozzie Kirkby](http://kirkbyo.com/), if you have any question feel free to contact. [Twitter](https://twitter.com/kirkbyo_)
+Built by [Ozzie Kirkby](http://kirkbyo.com/).  Forked and updated by [Michael Horn](http://hornware.com)

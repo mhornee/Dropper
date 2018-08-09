@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "Dropper"
+  s.name             = "MHDropper"
   s.version          = "2.7.6"
   s.summary          = "Customizable Swift Dropdown Menu "
 
@@ -20,12 +20,12 @@ Pod::Spec.new do |s|
 Highly customizable Swift Dropdown Menu. Easy to use and to set up. 
                        DESC
 
-  s.homepage         = "https://github.com/kirkbyo/Dropper"
+  s.homepage         = "https://github.com/mhornee/Dropper"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "kirkbyo" => "ozzie@kirkbyo.com" }
-  s.source           = { :git => "https://github.com/kirkbyo/Dropper.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/kirkbyo_'
+  s.author           = { "mhornee" => "dropper@hornware.com" }
+  s.source           = { :git => "https://github.com/mhornee/Dropper.git", :tag => s.version.to_s }
+  # s.social_media_url = 'https://twitter.com/mike_d_horn'
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
